@@ -1,10 +1,12 @@
 # bridges_firebase
  Control multiple firebase
 ## Installation
+```yaml
 bridges_firebase:
   git:
     url: https://github.com/bridges2021/bridges_firebase.git
     ref: main
+```
 ## How to use
 ### Basic
 1. Set keys
