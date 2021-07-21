@@ -5,15 +5,13 @@ final List<FirebaseSetting> apps = [
       name: 'yourName',
       appId: 'yourAppId',
       apiKey: 'yourApiKey',
-      messagingSenderId:
-          'yourMessagingSenderId',
+      messagingSenderId: 'yourMessagingSenderId',
       projectId: 'yourProjectId'),
   FirebaseSetting(
       name: 'yourName',
       appId: 'yourAppId',
       apiKey: 'yourApiKey',
-      messagingSenderId:
-      'yourMessagingSenderId',
+      messagingSenderId: 'yourMessagingSenderId',
       projectId: 'yourProjectId'),
 ];
 

@@ -45,6 +45,7 @@ class _MyViewState extends State<MyView> {
         children: [
           ElevatedButton(
               onPressed: () async {
+                await App.Cardboard.app.signInWithGoogle();
                 await App.Cardboard.app.createUserWithEmail(
                     'fanchungchit@icloud.com', 'fanchungchit@icloud.com');
                 await App.Cardboard.app.updateProfileInfo(Info(name: 'Tony'));
