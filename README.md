@@ -23,14 +23,14 @@ final List<FirebaseSetting> apps = [
 ```
 2. Set up for easy call
 ```dart
-enum App { First, Second }
+enum App { Your, App }
 
 extension Apps on App {
   FirebaseSetting get app {
     switch (this) {
-      case App.First:
+      case App.Your:
         return apps[0];
-      case App.Second:
+      case App.App:
         return apps[1];
 
       default:
@@ -55,7 +55,8 @@ await appsInitialize();
 ```
 4. Use built functions
 ```dart
-App.First.app.user;
+await App.Your.app.createUserWithEmail('email', 'password');
+await App.App.app.signInWithGoogle();
 ```
 5. Finish
 ### Firebase Authenication synchronize
