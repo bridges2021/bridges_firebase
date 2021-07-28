@@ -2,28 +2,21 @@ import 'package:bridges_firebase/bridges_firebase.dart';
 
 final List<FirebaseSetting> apps = [
   FirebaseSetting(
-      name: 'yourName',
-      appId: 'yourAppId',
-      apiKey: 'yourApiKey',
-      messagingSenderId: 'yourMessagingSenderId',
-      projectId: 'yourProjectId'),
-  FirebaseSetting(
-      name: 'yourName',
-      appId: 'yourAppId',
-      apiKey: 'yourApiKey',
-      messagingSenderId: 'yourMessagingSenderId',
-      projectId: 'yourProjectId'),
+      name: 'OpenProject',
+      appId: '1:650650171321:ios:668ade462e8e07ed536868',
+      apiKey: 'AIzaSyBTOuYizVZ-Kolv_lImMDNesl6jFRjbRBk',
+      messagingSenderId:
+          'com.googleusercontent.apps.650650171321-hapdqgu4kf5cib41f3967v4660tlndc6',
+      projectId: 'openproject-6544b'),
 ];
 
-enum App { Cardboard, Logistized }
+enum App { OpenProject }
 
 extension Apps on App {
   FirebaseSetting get app {
     switch (this) {
-      case App.Cardboard:
+      case App.OpenProject:
         return apps[0];
-      case App.Logistized:
-        return apps[1];
 
       default:
         return apps.first;
@@ -31,7 +24,7 @@ extension Apps on App {
   }
 }
 
-Future<void> appsInitialize() async {
+Future<void> initializeApps() async {
   for (final app in apps) {
     try {
       await app.initialize();

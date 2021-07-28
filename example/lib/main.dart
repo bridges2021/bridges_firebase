@@ -1,76 +1,49 @@
+import 'package:bridges_firebase/LocalSettings.dart';
 import 'package:bridges_firebase/bridges_firebase.dart';
+import 'package:example/FirebaseSettings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
-import 'FirebaseSettings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await appsInitialize();
+  try {
+    await initializeApps();
+  } catch (e) {
+    print(e);
+  }
   runApp(MultiProvider(
-    providers: [
-      StreamProvider(
-          create: (context) => App.Cardboard.app.streamUserChange(),
-          initialData: null)
-    ],
-    child: ExampleApp(),
+    providers: [ChangeNotifierProvider(create: (_) => LocalSettings())],
+    child: Phoenix(child: ExampleApp()),
   ));
 }
 
 class ExampleApp extends StatelessWidget {
-  const ExampleApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyView(),
-    );
-  }
-}
-
-class MyView extends StatefulWidget {
-  const MyView({Key? key}) : super(key: key);
-
-  @override
-  _MyViewState createState() => _MyViewState();
-}
-
-class _MyViewState extends State<MyView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Firebase example'),
-      ),
-      body: ListView(
-        children: [
-          ElevatedButton(
+      theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)))))),
+      home: StartView(
+        app: App.OpenProject.app,
+        child: Scaffold(
+          body: Center(
+            child: ElevatedButton(
+              child: Text('Sign out'),
               onPressed: () async {
-                await App.Cardboard.app.signInWithGoogle();
-                await App.Cardboard.app.createUserWithEmail(
-                    'fanchungchit@icloud.com', 'fanchungchit@icloud.com');
-                await App.Cardboard.app.updateProfileInfo(Info(name: 'Tony'));
+                await App.OpenProject.app.auth.signOut();
+                final _localSettings = context.read<LocalSettings>();
+                _localSettings.isUserSignedIn = false;
+                await _localSettings.set();
+                Phoenix.rebirth(context);
               },
-              child: Text('Create a new user first')),
-          ElevatedButton(
-              onPressed: () async {
-                await App.Cardboard.app.auth.signOut();
-              },
-              child: Text('Sign out current user')),
-          ElevatedButton(
-              onPressed: () async {
-                await App.Logistized.app.createUserWithEmail(
-                    'fanchungchit@icloud.com', 'fanchungchit@icloud.com');
-                await syncProfileInfo([App.Cardboard.app], App.Logistized.app);
-              },
-              child: Text('Create user with same email on second app')),
-          ElevatedButton(
-              onPressed: () async {
-                final _profile = await App.Logistized.app.getProfile();
-                print(_profile.toMap);
-              },
-              child: Text(
-                  'Check info of second user, info should be same as first'))
-        ],
+            ),
+          ),
+        ),
       ),
     );
   }
