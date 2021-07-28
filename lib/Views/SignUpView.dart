@@ -1,3 +1,4 @@
+import 'package:bridges_firebase/Classes/AccessRight.dart';
 import 'package:bridges_firebase/LocalSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -82,6 +83,8 @@ class _SignUpViewState extends State<SignUpView> {
                       _emailController.text,
                       _passwordController.text);
                   final _localSettings = context.read<LocalSettings>();
+                  _localSettings.userProfile.accessRight = AccessRight.init();
+                  _localSettings.userProfile.locations = [];
                   _localSettings.userProfile.id = _emailController.text;
                   _localSettings.userProfile.email = _emailController.text;
                   _localSettings.userProfile.name = _nameController.text;
