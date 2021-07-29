@@ -48,6 +48,7 @@ class _SignInViewState extends State<SignInView> {
               height: 20,
             ),
             TextFormField(
+              obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(
                 hintText: 'Password',
